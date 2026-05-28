@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickPoint Live Subtitles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="logo-container">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">QuickPoint</span>
+      </div>
+      <p class="tagline">Live Subtitles &amp; AI Analytics</p>
+    </header>
+
+    <!-- API & Session Configuration -->
+    <section class="card">
+      <div class="form-group">
+        <label for="apiKey">Groq API Key</label>
+        <div class="input-group">
+          <input
+            type="password"
+            id="apiKey"
+            placeholder="Enter gsk_..."
+            autocomplete="off"
+          >
+          <button id="toggleVisibility" class="icon-btn" title="Toggle visibility">
+            <span id="eyeIcon">👁️</span>
+          </button>
+        </div>
+        <div class="btn-row">
+          <button id="saveKey" class="btn btn-secondary">Save Key</button>
+          <a href="https://console.groq.com/keys" target="_blank" class="api-link">Get key →</a>
+        </div>
+        <p id="keyStatus" class="status-text"></p>
+      </div>
+
+      <div class="form-group" style="margin-top: 12px; margin-bottom: 0;">
+        <label for="sessionTitle">Meeting Title</label>
+        <input
+          type="text"
+          id="sessionTitle"
+          placeholder="QuickPoint Session"
+        >
+      </div>
+    </section>
+
+    <!-- Recording Controls & Status -->
+    <section class="card controls-section">
+      <div class="status-bar">
+        <div class="status-indicator">
+          <span id="statusDot" class="status-dot"></span>
+          <span id="statusText">Ready</span>
+        </div>
+      </div>
+
+      <div class="button-group-row">
+        <button id="startBtn" class="btn btn-primary">
+          <span class="btn-icon">▶</span> Start
+        </button>
+        <button id="stopBtn" class="btn btn-danger" disabled>
+          <span class="btn-icon">■</span> Stop
+        </button>
+      </div>
+    </section>
+
+    <!-- Live Transcript Preview -->
+    <section class="card transcript-card">
+      <div class="card-header">
+        <h3>Live Transcript</h3>
+        <span id="wordCount" class="badge">0 words</span>
+      </div>
+      <div id="transcriptContainer" style="position: relative; width: 100%;">
+        <div id="transcriptPreview" class="transcript-box">
+          <span class="placeholder-text">Subtitles will appear here in real-time...</span>
+        </div>
+        <textarea id="transcriptEditArea" class="transcript-box" style="display: none; width: 100%; min-height: 180px; resize: vertical; background: rgba(0,0,0,0.25); color: var(--text-primary); border: 1px solid var(--border); padding: 10px; font-family: inherit; font-size: 0.85rem; border-radius: var(--radius-sm); outline: none; line-height: 1.5;"></textarea>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 10px;">
+        <button id="editTranscriptBtn" class="btn btn-secondary" style="flex: 1; padding: 6px 12px; font-size: 0.76rem; font-weight: 600;">✏️ Edit Transcript</button>
+        <button id="clearTranscriptBtn" class="btn btn-danger" style="flex: 1; padding: 6px 12px; font-size: 0.76rem; font-weight: 600;">🗑️ Clear</button>
+        <button id="restartSessionBtn" class="btn btn-secondary" style="flex: 1; padding: 6px 12px; font-size: 0.76rem; font-weight: 600;">🔄 Restart</button>
+      </div>
+    </section>
+
+    <!-- AI Intelligence & Export -->
+    <section id="aiSection" class="card ai-section">
+      <div class="card-header">
+        <h3>Post-Meeting Intelligence</h3>
+      </div>
+      
+      <div class="button-group-vertical">
+        <button id="generateSummaryBtn" class="btn btn-accent" disabled>
+          <span class="btn-icon">✨</span> Generate AI Summary
+        </button>
+        
+        <div class="action-btn-row">
+          <button id="exportReportBtn" class="btn btn-secondary" disabled>
+            <span class="btn-icon">📥</span> Export PDF
+          </button>
+          <button id="sendDashboardBtn" class="btn btn-success" disabled>
+            <span class="btn-icon">⚡</span> Dashboard Sync
+          </button>
+        </div>
+      </div>
+
+      <!-- Spinner Overlay -->
+      <div id="aiSpinner" class="spinner-overlay hidden">
+        <div class="spinner"></div>
+        <p>Analyzing transcript with Groq AI...</p>
+      </div>
+
+      <!-- AI Outputs -->
+      <div id="aiOutputs" class="ai-outputs hidden">
+        <div class="output-block">
+          <h4>Summary</h4>
+          <p id="summaryText"></p>
+        </div>
+        <div class="output-block">
+          <h4>Key Points</h4>
+          <ul id="keyPointsList"></ul>
+        </div>
+        <div class="output-block">
+          <h4>Action Items</h4>
+          <ul id="actionItemsList"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p class="help-text">QuickPoint Meeting Assistant &copy; 2026</p>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

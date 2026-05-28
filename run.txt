@@ -1,0 +1,13 @@
+cd quickpoint-web-backup\backend
+python -m venv venv
+venv\Scripts\activate
+python -m pip install --upgrade pip "setuptools<82" wheel
+pip install --no-build-isolation openai-whisper==20231117
+pip install -r requirements.txt
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+
+
+
+cd quickpoint-web-backup\frontend
+npm install
+npm run dev
